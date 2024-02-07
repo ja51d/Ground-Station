@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>testqml.qml</file>
+        <file>skin1.jpg</file>
+        <file>itutayf0.png</file>
+        <file>spacee.jpg</file>
+        <file>map.qml</file>
+    </qresource>
+</RCC>
