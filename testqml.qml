@@ -9,9 +9,10 @@ import QtQuick.Controls 2.15
 
 
     View3D {
-        property double roll:0
-        property double yaw:20
-        property double pitch: 0
+
+        property double roll: 0
+             property double yaw: 0
+             property double pitch: 0
         id: view
         anchors.fill: parent
         camera: camera
@@ -33,7 +34,7 @@ import QtQuick.Controls 2.15
             id: cylinder
             visible: true
             position: Qt.vector3d(0, 30, 0)
-            Rotation { angle: 20; axis: "50,50,20" }
+
             source: "#Cylinder"
 
 
@@ -48,39 +49,45 @@ import QtQuick.Controls 2.15
 
 
 
-                     eulerRotation.y: 90
+
 
                      scale.x: 0.8
                      scale.y: 1.6
                      scale.z: 0.8
                      pickable: true
                      property bool isPicked: false
-
-                     SequentialAnimation on eulerRotation {
-                         loops: Animation.Infinite
-                         PropertyAnimation {
-                             duration: 2500
-                             from: Qt.vector3d(0, 0, 0)
-                             to: Qt.vector3d(roll, yaw, pitch)
-                         }
-
-
-
-
-
-
-
+                     PropertyAnimation on eulerRotation.x {
+                                                          loops: Animation.Infinite
+                                                          duration: 1000
+                                                          to: roll
+                                                          from: 0
                      }
-                     Timer {
+
+                                          PropertyAnimation on eulerRotation.y {
+                                                          loops: Animation.Infinite
+                                                          duration: 1000
+                                                          to: yaw
+                                                          from: 0
+                     }
+                                          PropertyAnimation on eulerRotation.z {
+                                                          loops: Animation.Infinite
+                                                          duration: 1000
+                                                          to: pitch
+                                                          from: 0
+                     }
+}
+
+
+Timer {
                                  id: updateTimer
-                                 interval: 1000 // Update every 1000 milliseconds (1 second)
+                                 interval: 1000// Update every 1000 milliseconds (1 second)
                                  repeat: true
                                  running: true
 
                                  onTriggered: {
-                                     // Simulate changing latitude and longitude
 
-                    // eulerFunction(roll, yaw, pitch)
+
+                    eulerFunction(roll, yaw, pitch)
                                        console.log(roll, yaw, pitch)
 }
 
@@ -89,9 +96,8 @@ import QtQuick.Controls 2.15
 
 }
 
-            function eulerFunction(rolll, yaww, pitchh) {
-cylinder.pan(roll - rolll, yaw - yaww, pitch - pitchh)
-  console.log(roll, yaw, pitch)
+            function eulerFunction(roll, yaw, pitch){
+cylinder.eulerRotationChanged(roll - rolll, yaw - yaww, pitch - pitchh)
                 roll = rolll
                 yaw = yaww
                 pitch = pitchh
@@ -107,10 +113,12 @@ cylinder.pan(roll - rolll, yaw - yaww, pitch - pitchh)
 
 
 
-}
+
 
 
         Rectangle {
+
+
             anchors.fill: parent
             color: "#FFFFFF"
 
@@ -132,7 +140,7 @@ cylinder.pan(roll - rolll, yaw - yaww, pitch - pitchh)
                 id: text
                 anchors.bottom: parent.bottom
                 anchors.left: parent.left
-                color: "#f30505"
+                color: "#000000"
                 font.pixelSize: 20
                 text: qsTr(" 3D CANSAT MODEL")
                 font.family: "Gill Sans"
@@ -143,9 +151,9 @@ cylinder.pan(roll - rolll, yaw - yaww, pitch - pitchh)
                     id: textt
 
                     anchors.centerIn: parent.Center
-                    color: "#f30505"
+                    color: "#000000"
                     font.pixelSize: 15
-                    text: qsTr(" Rotation Coordinates: (360°, 50°, 360°)")
+                    text: qsTr(" ROLL   YAW   PITCH")
                     font.family: "Gill Sans"
                     font.bold: true
                     style: Text.Outline
